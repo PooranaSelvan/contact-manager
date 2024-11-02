@@ -13,6 +13,7 @@ const HomePage = () => {
     })
   }, [])
 
+  // mapped down
   const buttons = [
     { to: '/contacts', text: 'View Contacts', color: 'bg-blue-600', icon: Book, aosDelay: '0' },
     { to: '/addcontact', text: 'Add Contact', color: 'bg-green-600', icon: UserPlus, aosDelay: '100' },
@@ -22,6 +23,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-700 to-indigo-900 p-4 sm:p-8">
+      {/* favicon */}
       <Helmet>
         <link rel="icon" href="/img.jpg" />
         <title>Contact Manager - Home</title>

@@ -38,7 +38,7 @@ const RegisterPage = () => {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+    <div className="relative min-h-screen flex flex-wrap flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 gap-10">
       <Helmet>
         <link rel="icon" href="/login.svg" />
         <title>Register Page</title>
@@ -66,6 +66,9 @@ const RegisterPage = () => {
           <p className="text-gray-600">Already have an account?</p>
           <Link to='/' className="text-blue-500 hover:underline">Sign in</Link>
         </div>
+      </div>
+      <div className="flex absolute bottom-0 flex-wrap items-center justify-center text-center gap-6 text-white bg-gray-600 w-full py-5">
+        <p>If you already have an account <a className='font-bold underline' target='_blank' href="https://stud-management.vercel.app/">here</a>, please do not register. You can log in directly without creating a new account.</p>
       </div>
     </div>
   );

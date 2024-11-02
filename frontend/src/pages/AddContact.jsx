@@ -15,18 +15,22 @@ const AddContact = () => {
     address: ''
   });
 
+  // inital aa data va get panni setContacts la store panrom
   useEffect(() => {
     const storedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
     setContacts(storedContacts);
   }, []);
 
+  // runs on form inputs onChange
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // runs when click submit button
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // required field validator for form name & num
     if (!formData.name || !formData.phone) {
       Swal.fire({
         icon: "error",
@@ -37,6 +41,7 @@ const AddContact = () => {
       return;
     }
 
+    // if entered num or name were already exists in the setStudents means it display errors
     const alreadyExists = contacts.some((contact) => contact.phone === formData.phone);
     
     if (alreadyExists) {
@@ -49,6 +54,7 @@ const AddContact = () => {
       return;
     }
   
+    // if the num & name wasnt matched
     Swal.fire({
       icon: "success",
       title: "Success",
@@ -56,11 +62,11 @@ const AddContact = () => {
       confirmButtonColor: '#3085d6',
     });
   
-    const newContact = { ...formData };
-    const updatedContacts = [...contacts, newContact];
-    setContacts(updatedContacts);
-    localStorage.setItem('contacts', JSON.stringify(updatedContacts));
-    setFormData({ name: '', phone: '', email: '', company: '', jobTitle: '', address: '' });
+    const newContact = { ...formData }; // spreading all contacts we entered
+    const updatedContacts = [...contacts, newContact]; // adding with contacts we got from localStorage
+    setContacts(updatedContacts); // setting in setContacts
+    localStorage.setItem('contacts', JSON.stringify(updatedContacts)); // storing in localStorage
+    setFormData({ name: '', phone: '', email: '', company: '', jobTitle: '', address: '' }); // clearing formData to enter next data
   };
 
   return (

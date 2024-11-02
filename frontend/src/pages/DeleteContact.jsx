@@ -8,17 +8,22 @@ const DeleteContact = () => {
   const [contacts, setContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+
+  // inital aa data va get panni setContacts la store panrom
   useEffect(() => {
     const storedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
     setContacts(storedContacts);
   }, []);
 
+  // filtering contacts
   const filteredContacts = contacts.filter((contact) => {
     return contact.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
            contact.phone.includes(searchTerm);
   });
 
+  // passing phone numbers to ths func 
   const handleDelete = (phone) => {
+    // conformation message
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -28,10 +33,12 @@ const DeleteContact = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
+      // if confirmed filter it by number 
       if (result.isConfirmed) {
         const updatedContacts = contacts.filter((contact) => contact.phone !== phone);
-        setContacts(updatedContacts);
-        localStorage.setItem('contacts', JSON.stringify(updatedContacts));
+        setContacts(updatedContacts); // updating setContacts
+        localStorage.setItem('contacts', JSON.stringify(updatedContacts)); // updating localStorage
+        // deleted toast
         Swal.fire(
           'Deleted!',
           'The contact has been deleted.',
@@ -42,6 +49,7 @@ const DeleteContact = () => {
   }
 
   const handleClearAll = () => {
+    // deleting all contacts that in the array in the localStorage
     Swal.fire({
       title: 'Delete all contacts?',
       text: "This action cannot be undone!",
@@ -51,6 +59,7 @@ const DeleteContact = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete all!'
     }).then((result) => {
+      // if yes make the setContacts empty and remove contacts from localStorage
       if (result.isConfirmed) {
         setContacts([]);
         localStorage.removeItem('contacts');
@@ -77,20 +86,11 @@ const DeleteContact = () => {
         <div className="p-6">
           <div className="max-w-md mx-auto mb-8">
             <div className="relative flex items-center">
-              <input 
-                type="text" 
-                placeholder="Search by name or phone number" 
-                className="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                value={searchTerm} 
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+              <input type="text" placeholder="Search by name or phone number" className="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
               <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
             </div>
             {contacts.length >= 1 && (
-              <button 
-                className="mt-4 w-full bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300 flex items-center justify-center"
-                onClick={handleClearAll}
-              >
+              <button className="mt-4 w-full bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300 flex items-center justify-center"onClick={handleClearAll}>
                 <CircleMinus className="mr-2" /> Clear All Contacts
               </button>
             )}
@@ -125,10 +125,7 @@ const DeleteContact = () => {
                   </div>
                 </div>
                 <div className="bg-gray-100 px-6 py-4">
-                  <button  
-                    className="w-full bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300 flex items-center justify-center" 
-                    onClick={() => handleDelete(contact.phone)}
-                  >
+                  <button className="w-full bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300 flex items-center justify-center"onClick={() => handleDelete(contact.phone)}>
                     <Trash2 className="mr-2" /> Delete Contact
                   </button>
                 </div>

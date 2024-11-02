@@ -15,20 +15,26 @@ const EditContact = () => {
     address: "",
   });
 
+
+  // inital aa data va get panni setContacts la store panrom
   useEffect(() => {
     const storedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
     setContacts(storedContacts);
   }, []);
 
+
+  // runs on form input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // get button on phone number 
   const handleGetPhone = () => {
+    // if entered phone number wasnt matched to num we have in localStorage it displays error
     const contact = contacts.find(
       (c) => c.phone === formData.phone
     );
-
+    // if it got it sets to setFormData
     if (contact) {
       setFormData(contact);
     } else {
@@ -42,9 +48,11 @@ const EditContact = () => {
     }
   };
 
+  // submit of form 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // if 2 nums were same it spreads form data & stores in the updatedContacts
     const updatedContacts = contacts.map((contact) => {
       if (contact.phone === formData.phone) {
         return { ...formData };
@@ -53,8 +61,8 @@ const EditContact = () => {
       }
     });
   
-    setContacts(updatedContacts);
-    localStorage.setItem("contacts", JSON.stringify(updatedContacts));
+    setContacts(updatedContacts); // update in setStudents
+    localStorage.setItem("contacts", JSON.stringify(updatedContacts)); // update in localStorage
 
     Swal.fire({
       position: "top-end",
@@ -64,7 +72,7 @@ const EditContact = () => {
       timer: 1500,
     });
 
-    setFormData({ name: "", phone: "", email: "", company: "", jobTitle: "", address: "" });
+    setFormData({ name: "", phone: "", email: "", company: "", jobTitle: "", address: "" }); // making empty for next data
   };
 
   return (

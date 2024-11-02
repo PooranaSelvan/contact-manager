@@ -4,14 +4,17 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 const ContactDetails = () => {
+  // main useState to store data
   const [contacts, setContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // inital aa data va get panni setContacts la store panrom
   useEffect(() => {
     const storedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
     setContacts(storedContacts);
   }, []);
 
+  // search vachu filter panrom 
   const filteredContacts = contacts.filter((contact) => {
     return contact.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
            contact.phone.includes(searchTerm);
@@ -30,19 +33,15 @@ const ContactDetails = () => {
         <div className="bg-white rounded-xl shadow-2xl overflow-hidden mb-8">
           <div className="p-6">
             <div className="relative max-w-md mx-auto">
-              <input 
-                type="text" 
-                placeholder="Search by name or phone number" 
-                className="w-full px-4 py-2 pl-10 pr-4 text-gray-700 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" 
-                value={searchTerm} 
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+              <input type="text" placeholder="Search by name or phone number" className="w-full px-4 py-2 pl-10 pr-4 text-gray-700 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
               <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             </div>
           </div>
 
+          {/* filter panna contacts ooda len 0 mela irutha tha display output or error */}
           {filteredContacts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+              {/* filter panatha map panrom */}
               {filteredContacts.map((contact) => (
                 <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-lg hover:scale-105" key={contact.phone}>
                   <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4">
